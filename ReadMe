@@ -1,0 +1,27 @@
+Instructions on how to run the system
+- Executable file
+I have created .exe executable file to run my application. Please execute the .exe file and try APIs in postman. You need to create a project first as the database will be initially empty.
+Step 1: Download and run the executable file app.exe
+Step 2: Open Postman and hit below API to create first project
+    URL - http://127.0.0.1:5000/api/project/add
+    Authentication – Select Basic Authentication
+                    Credentials: user1/password1
+    Payload - Raw/JSON
+            { "name": "Project Name", "description": "Project description", "status": "in progress" }
+
+
+
+- Running Code:
+Step 1: Download and unzip the zip file.
+Step 2: From terminal/command prompt execute command go to the Code folder pip install -r requirements.txt
+Step 3: Run app.py
+Step 4: Open Postman and hit below API to create first project
+    URL - http://127.0.0.1:5000/api/project/add
+    Authentication – Select Basic Authentication
+                    Credentials: user1/password1
+    Payload - Raw/JSON
+            { "name": "Project Name", "description": "Project description", "status": "in progress" }
+
+
+
+
