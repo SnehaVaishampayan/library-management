@@ -20,10 +20,10 @@ def create_db_table():
         conn.execute(DROP_TABLE)
         conn.execute(CREATE_TABLE)
         conn.commit()
-        print("Project table created successfully")
+        print("Book table created successfully")
         conn.close()
     except Exception as e:
-        print("Project table creation failed.", str(e))
+        print("Book table creation failed.", str(e))
 
 
 # This function is responsible for passing the cursor to execute queries other functions.
