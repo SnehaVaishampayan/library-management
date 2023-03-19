@@ -5,8 +5,7 @@ CREATE_TABLE_QUERY = "CREATE TABLE Book ( id TEXT PRIMARY KEY NOT NULL, name TEX
 CREATE_BOOK_QUERY = "INSERT INTO Book (id, name, description, created, updated, status, author, publication, copies) " \
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
-UPDATE_BOOK_QUERY = "UPDATE INTO Book (name, description, created, updated, status, author, publication, copies) " \
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?) WHERE id = ?"
+UPDATE_BOOK_QUERY = "UPDATE Book SET name= ?, updated = ? WHERE id = ?"
 
 GET_ALL_BOOKS = "SELECT * FROM Book"
 DROP_TABLE = "DROP TABLE IF EXISTS Book"

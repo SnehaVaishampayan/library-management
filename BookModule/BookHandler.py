@@ -147,16 +147,8 @@ def update_book(book_payload, login_username):
         if not validate_book_payload(book_payload):
             raise Exception("Book Validation failed.")
 
-        # book_payload['id'] = str(uuid.uuid4())
-        book_payload['created'] = datetime.now()
         book_payload['updated'] = datetime.now()
-        cur.execute(Constants.CREATE_BOOK_QUERY, (
-            book_payload['id'], book_payload['name'],
-            book_payload['description'], book_payload['created'],
-            book_payload['updated'], book_payload['status'],
-            book_payload['author'],
-            book_payload['publication'],
-            book_payload['copies']))
+        cur.execute(Constants.UPDATE_BOOK_QUERY, (book_payload['name'], book_payload['updated'], book_payload['id']))
         conn.commit()
 
     except Exception as e:
