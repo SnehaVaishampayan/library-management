@@ -1,6 +1,6 @@
 import sqlite3
 
-from Constants import DROP_TABLE, CREATE_TABLE
+from Constants import DROP_TABLE, CREATE_TABLE_QUERY
 
 global conn
 
@@ -18,7 +18,7 @@ def create_db_table():
     try:
         conn = sqlite3.connect(r"./database/database.db")
         conn.execute(DROP_TABLE)
-        conn.execute(CREATE_TABLE)
+        conn.execute(CREATE_TABLE_QUERY)
         conn.commit()
         print("Book table created successfully")
         conn.close()

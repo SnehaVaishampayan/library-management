@@ -6,6 +6,7 @@ import json
 from LoginModule.LoginHandler import is_user_authenticated
 from database.DatabaseHandler import database_handler
 from BookModule import BookHandler
+from LoginModule.LoginHandler import is_user_admin
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -13,14 +14,26 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 # 1•An API endpoint to o create a BookModule
 @app.route('/api/book/add', methods=['POST'])
-def api_add_user():
-    response = []
-    if is_user_authenticated(request.authorization):
-        book_payload = request.get_json()
-        return jsonify(BookHandler.create_book(book_payload, request.authorization['username']))
-    else:
-        response.append("Invalid user")
-    return jsonify(response)
+def api_add_book():
+    response_books = []
+    response = {}
+    try:
+        if not is_user_authenticated(request.authorization):
+            response_books = 'Invalid user'
+            raise Exception
+        elif not is_user_admin(request.authorization['username']):
+            print("in app")
+            response_books = 'Only admins can add the book to the library'
+            raise Exception
+        else:
+            response = BookHandler.create_book(request.get_json(), request.authorization['username'])
+            print(response)
+            return jsonify(response)
+
+    except:
+        response['status'] = 400
+        response['message'] = response_books
+        return jsonify(response)
 
 
 #  2•An API endpoint to get details about a specific BookModule
@@ -29,7 +42,7 @@ def api_get_all_books():
     response = []
     if is_user_authenticated(request.authorization):
         if len(request.args) == 0:
-            all_books_list = BookHandler.get_books_by_user_company(request.authorization['username'])
+            all_books_list = BookHandler.get_all_books()
         else:
             all_books_list = BookHandler.get_books_by_filter(request.args)
         return jsonify(all_books_list)
@@ -48,6 +61,29 @@ def api_get_books_by_company():
     else:
         response.append("Invalid user")
     return jsonify(response)
+
+
+# 4. An API endpoint to o update a Book
+@app.route('/api/book/update', methods=['PUT'])
+def api_update_book():
+    response_books = []
+    response = {}
+    try:
+        if not is_user_authenticated(request.authorization):
+            response_books = 'Invalid user'
+            raise Exception
+        elif not is_user_admin(request.authorization['username']):
+            print("in app")
+            response_books = 'Only admins can update the book from the library'
+            raise Exception
+        else:
+            response = BookHandler.update_book(request.get_json(), request.authorization['username'])
+            print(response)
+            return jsonify(response)
+    except:
+        response['status'] = 400
+        response['message'] = response_books
+        return jsonify(response)
 
 
 # This function is responsible for starting the application
